@@ -4,6 +4,8 @@ Rails.application.routes.draw do
 
   # EXAMPLE JSON ROUTE WITH API NAMESPACE
   namespace :api do
-    get "/products_path" => "products#display_products_action"
+    get "/products_path" => "products#all_products"
+    get "/product_path" => "products#single_product"
+    get "/product_path_url_segment/:id" => "products#single_product_url"
   end
 end
