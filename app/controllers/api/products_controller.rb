@@ -1,17 +1,18 @@
 class Api::ProductsController < ApplicationController
-  def all_products
+  def index
     @products = Product.all
-    render "products.json.jb"
+    render "index.json.jb"
   end
 
-  def single_product
-    @product = Product.find_by(id: 2)
-    render "single_product.json.jb"
-  end
-
-  def single_product_url
-    input_value = params[:id]
+  def show
+    input_value = params["id"]
     @product = Product.find_by(id: input_value)
-    render "single_product.json.jb"
+    render "show.json.jb"
   end
+
+  # def single_product_url
+  #   input_value = params[:id]
+  #   @product = Product.find_by(id: input_value)
+  #   render "single_product.json.jb"
+  # end
 end
