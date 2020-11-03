@@ -1,12 +1,1 @@
-{
-  id: @product.id,
-  artist: @product.artist,
-  title: @product.title,
-  genre: @product.genre,
-  year: @product.year,
-  description: @product.description,
-  image_url: @product.image_url,
-  is_discounted: @product.is_discounted?,
-  tax: @product.tax,
-  total: @product.total,
-}
+render partial: "product.json.jb", locals: { product: @product }
