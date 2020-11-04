@@ -11,7 +11,7 @@ class Api::ProductsController < ApplicationController
   end
 
   def create
-    @product = Product.create ({
+    @product = Product.new ({
       artist: params["artist"],
       title: params["title"],
       price: params["price"],
@@ -19,7 +19,12 @@ class Api::ProductsController < ApplicationController
       description: params["description"],
       year: params["year"],
     })
-    render "show.json.jb"
+
+    if @product.save
+      render "show.json.jb"
+    else
+      render json: { errors: @product.errors.full_messages }, status: :unprocessable_entity
+    end
   end
 
   def update
@@ -32,9 +37,11 @@ class Api::ProductsController < ApplicationController
     @product.description = params["description"] || @product.description
     @product.image_url = params["image_url"] || @product.image_url
 
-    @product.save
-
-    render "show.json.jb"
+    if @product.save
+      render "show.json.jb"
+    else
+      render json: { errors: @product.errors.full_messages }, status: :unprocessable_entity
+    end
   end
 
   def destroy
@@ -44,10 +51,4 @@ class Api::ProductsController < ApplicationController
 
     render json: { message: "You have successfully deleted the product!" }
   end
-
-  # def single_product_url
-  #   input_value = params[:id]
-  #   @product = Product.find_by(id: input_value)
-  #   render "single_product.json.jb"
-  # end
 end
