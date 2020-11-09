@@ -5,8 +5,10 @@
   genre: product.genre,
   year: product.year,
   description: product.description,
-  image_url: product.image_url,
+  image: product.image,
   is_discounted: product.is_discounted?,
+  price: product.price,
   tax: product.tax,
   total: product.total,
+  supplier: product.supplier,
 }

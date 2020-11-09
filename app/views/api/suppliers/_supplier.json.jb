@@ -1,0 +1,6 @@
+{
+  id: product.id,
+  name: product.name,
+  email: product.email,
+  phone_number: product.phone_number,
+}
