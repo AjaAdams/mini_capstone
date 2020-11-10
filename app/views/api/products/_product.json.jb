@@ -5,7 +5,7 @@
   genre: product.genre,
   year: product.year,
   description: product.description,
-  image: product.image,
+  images: product.images,
   is_discounted: product.is_discounted?,
   price: product.price,
   tax: product.tax,

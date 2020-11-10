@@ -1,21 +1,23 @@
 class Api::ProductsController < ApplicationController
   def index
+    p current_user
+
     @products = Product.all
-    sort_order = params[:sort_order]
+    # sort_order = params[:sort_order]
 
-    if params[:search]
-      @products = @products.where("artist LIKE ?", "%#{search}%")
-    end
+    # if params[:search]
+    #   @products = @products.where("artist LIKE ?", "%#{search}%")
+    # end
 
-    if params[:sort] == "price"
-      @products = @products.order(price: :desc)
-    else
-      @products = @products.order(price: :asc)
-    end
+    # if params[:sort] == "price"
+    #   @products = @products.order(price: :desc)
+    # else
+    #   @products = @products.order(price: :asc)
+    # end
 
-    if params[:sort] == "price" && params[:sort_order] == "desc"
-      @products = @products.order(price: :desc)
-    end
+    # if params[:sort] == "price" && params[:sort_order] == "desc"
+    #   @products = @products.order(price: :desc)
+    # end
 
     render "index.json.jb"
   end
@@ -33,9 +35,10 @@ class Api::ProductsController < ApplicationController
       price: params["price"],
       description: params["description"],
       year: params["year"],
+      supplier_id: params[:supplier_id],
     })
-
     if @product.save
+      Image.create!(product_id: @product.id, url: params[:images])
       render "show.json.jb"
     else
       render json: { errors: @product.errors.full_messages }, status: :unprocessable_entity
@@ -52,6 +55,7 @@ class Api::ProductsController < ApplicationController
     @product.description = params["description"] || @product.description
 
     if @product.save
+      Image.create!(product_id: @product.id, url: params[:images])
       render "show.json.jb"
     else
       render json: { errors: @product.errors.full_messages }, status: :unprocessable_entity
