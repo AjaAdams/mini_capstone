@@ -1,23 +1,23 @@
 class Api::ProductsController < ApplicationController
+  before_action :authenticate_admin, except: [:index, :show]
+
   def index
-    p current_user
-
     @products = Product.all
-    # sort_order = params[:sort_order]
+    sort_order = params[:sort_order]
 
-    # if params[:search]
-    #   @products = @products.where("artist LIKE ?", "%#{search}%")
-    # end
+    if params[:search]
+      @products = @products.where("artist LIKE ?", "%#{search}%")
+    end
 
-    # if params[:sort] == "price"
-    #   @products = @products.order(price: :desc)
-    # else
-    #   @products = @products.order(price: :asc)
-    # end
+    if params[:sort] == "price"
+      @products = @products.order(price: :desc)
+    else
+      @products = @products.order(price: :asc)
+    end
 
-    # if params[:sort] == "price" && params[:sort_order] == "desc"
-    #   @products = @products.order(price: :desc)
-    # end
+    if params[:sort] == "price" && params[:sort_order] == "desc"
+      @products = @products.order(price: :desc)
+    end
 
     render "index.json.jb"
   end
