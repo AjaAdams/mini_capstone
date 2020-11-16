@@ -3,4 +3,21 @@ class Order < ApplicationRecord
   has_many :carted_products
   has_many :products, through: :carted_products
   has_many :users, through: :carted_products
+
+  def update_totals
+    calculated_subtotal = 0
+    #count up from 0 based on what is added to cart
+    carted_products.each do |carted_product|
+      calculated_subtotal = calculated_subtotal + carted_product.quantity * carted_product.product.price
+    end
+
+    calculated_tax = calculated_subtotal * 0.09
+    calculated_total = calculated_subtotal + calculated_tax
+
+    self.subtotal = calculated_subtotal
+    self.tax = calculated_tax
+    self.total = calculated_total
+    self.save
+
+  end
 end
